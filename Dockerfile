@@ -1,8 +1,10 @@
 FROM alpine:latest
 ENV APTLIST="bash curl git php-cli php-json php-curl php-phar php-openssl php-xml php-dom"
+ENV COMPOSER_HOME="/app"
+
+#Add your email and password on runtime
 ENV EMAIL = ""
 ENV PASSWORD = ""
-ENV COMPOSER_HOME="/app"
 
 ADD start.sh /start.sh
 
