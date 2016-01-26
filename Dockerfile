@@ -11,6 +11,7 @@ ADD start.sh /start.sh
 # Make directory
 RUN mkdir -p /app /downloads && \
 # Install and update
+	cd / && \
 	apk update && \
 	apk upgrade	&& \
 	apk add --update $APTLIST && \
