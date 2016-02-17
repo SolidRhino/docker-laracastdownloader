@@ -9,7 +9,7 @@ ENV PASSWORD = ""
 ADD start.sh /start.sh
 
 # Make directory
-RUN mkdir -p /app /downloads && \
+RUN mkdir -p /downloads && \
 # Install and update
 	cd / && \
 	apk update && \
