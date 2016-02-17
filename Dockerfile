@@ -17,6 +17,7 @@ RUN mkdir -p /downloads && \
 	apk add --update $APTLIST && \
 	curl -sS https://getcomposer.org/installer | php && \
 	mv composer.phar /bin/composer && \
+	ls -a /app && \
 # Install laravel downloader
 	git clone https://github.com/iamfreee/laracasts-downloader.git /app && \
 	cd /app && \
