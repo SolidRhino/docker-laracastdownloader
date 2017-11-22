@@ -1,5 +1,4 @@
-FROM alpine:latest
-ENV APTLIST="bash curl git php-cli php-json php-curl php-phar php-openssl php-xml php-dom"
+FROM php:7.0-cli
 ENV COMPOSER_HOME="/app"
 
 #Add your email and password on runtime
@@ -10,21 +9,21 @@ ADD start.sh /start.sh
 
 # Make directory
 RUN mkdir -p /downloads && \
-# Install and update
-	cd / && \
-	apk update && \
-	apk upgrade	&& \
-	apk add --update $APTLIST && \
-	curl -sS https://getcomposer.org/installer | php && \
-	mv composer.phar /bin/composer && \
-	rm -r /app && \
+
+# install dependences
+apt-get update && apt-get install -y libcurl4-gnutls-dev zlib1g-dev git && \
+docker-php-ext-configure curl --with-curl && \
+docker-php-ext-install -j$(nproc) curl zip
+
 # Install laravel downloader
-	git clone https://github.com/iamfreee/laracasts-downloader.git /app && \
-	cd /app && \
-	composer install && \
-	mv /app/config.example.ini /app/config.ini && \
-	chmod +x /start.sh && \
-	rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+RUN git clone https://github.com/iamfreee/laracasts-downloader.git /app && \
+cd /app && \
+curl --silent --show-error https://getcomposer.org/installer | php && \
+php composer.phar install && \
+composer install && \
+mv /app/.env.example /app/config.ini && \
+chmod +x /start.sh && \
+rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 VOLUME /downloads
 
