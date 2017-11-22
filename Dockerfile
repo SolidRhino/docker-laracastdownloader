@@ -20,8 +20,7 @@ RUN git clone https://github.com/iamfreee/laracasts-downloader.git /app && \
 cd /app && \
 curl --silent --show-error https://getcomposer.org/installer | php && \
 php composer.phar install && \
-composer install && \
-mv /app/.env.example /app/config.ini && \
+mv /app/.env.example /app/env && \
 chmod +x /start.sh && \
 rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
